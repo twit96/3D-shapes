@@ -1,0 +1,249 @@
+/* ------------------------------------------------------------------ Config */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1 {
+  position: fixed;
+  font-size: 250%;
+  top: 1.5rem; left: 1.5rem;
+  color: var(--black);
+  z-index: 1;
+}
+
+
+/* ------------------------------------------------- Invertable Color Scheme */
+html {
+  --black: #000000;
+  --white: #ffffff;
+}
+html.inverted {
+  --black: #ffffff;
+  --white: #000000;
+}
+
+/* Fixed Toggle Element */
+#invert-toggle {
+  position: fixed;
+  bottom: 1.5rem; left: 1.5rem;
+  width: 4rem; height: 2rem;
+  z-index: 1;
+}
+/* hide input element*/
+#invert-toggle input {
+  opacity: 0;
+  width: 0; height: 0;
+}
+/* custom slider */
+#invert-toggle .slider {
+  cursor: pointer;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: 4rem;
+  background: var(--black);
+}
+#invert-toggle .slider:before {
+  content: '';
+  position: absolute;
+  width: 1.5rem; height: 1.5rem;
+  top: 0.25rem; left: 0.25rem;
+  background: var(--white);
+  border-radius: 50%;
+  transition: 0.25s transform ease-in-out;
+}
+input:checked + .slider:before { transform: translateX(2rem); }
+
+
+/* --------------------------------------------------------- Scroll Snapping */
+html {
+  height: 100vh;
+  overflow-y: hidden;
+}
+body {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+.scene {
+  position: relative;
+  scroll-snap-align: start;
+
+  width: 100%;
+  min-height: 100vh;
+  border: 1vmin solid var(--black);
+  background: var(--white);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 150vmin;
+  overflow: hidden;
+}
+
+.scene .info {
+  position: absolute;
+  right: 1.5rem; bottom: 1.5rem;
+  color: var(--black);
+  text-align: center;
+  z-index: 1;
+}
+
+
+/* --------------------------------------------------------------- Fixed Nav */
+nav {
+  position: sticky;
+  top: 0;
+  padding: 1.5rem;
+  margin-left: auto;
+  border-radius: 0 0 0 1rem;
+  z-index: 1;
+  text-align: right;
+  background: var(--black);
+}
+nav a {
+  position: relative;
+  display: block;
+  color: var(--white);
+  margin: 0.5rem 0;
+}
+nav a.active { text-decoration: underline; }
+
+
+/* ----------------------------------------------------------- Shape Presets */
+.shape {
+  --width: 0;
+  --height: 0;
+  width: var(--width);
+  height: var(--height);
+  position: relative;
+  transform-style: preserve-3d;
+  animation: 20s rotation linear infinite;
+}
+@keyframes rotation {
+  0% {   transform: rotateX(0deg)   rotateY(75deg)   rotateZ(180deg); }
+  100% { transform: rotateX(360deg) rotateY(-285deg) rotateZ(-180deg); }
+}
+.face {
+  width: var(--width);
+  height: var(--height);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10vmin;
+  overflow: hidden;
+  color: white;
+}
+
+
+/* --------------------------------------------------------------- Card Flip */
+.shape.card {
+  --width: 50vmin;
+  --height: 75vmin;
+}
+
+.card .face { backface-visibility: hidden; }
+.card .face.front { transform: rotateY(0); }
+.card .face.back { transform: rotateY(180deg); }
+
+
+/* -------------------------------------------------------------------- Cube */
+.shape.cube {
+  --width: 50vmin;
+  --height: 50vmin;
+  transform: translateZ(-25vmin);  /* to unfuz text */
+}
+
+.cube .face.front {  transform: rotateY(0deg)   translateZ(25vmin); }
+.cube .face.right {  transform: rotateY(90deg)  translateZ(25vmin); }
+.cube .face.back {   transform: rotateY(180deg) translateZ(25vmin); }
+.cube .face.left {   transform: rotateY(-90deg) translateZ(25vmin); }
+.cube .face.top {    transform: rotateX(90deg)  translateZ(25vmin); }
+.cube .face.bottom { transform: rotateX(-90deg) translateZ(25vmin); }
+
+
+/* --------------------------------------------------------------------- Box */
+.shape.box {
+  --width: 60vmin;
+  --height: 40vmin;
+}
+
+.box .face.front,
+.box .face.back {
+  width: 60vmin;
+  height: 40vmin;
+}
+
+.box .face.right,
+.box .face.left {
+  width: 20vmin;
+  height: 40vmin;
+  left: 20vmin;
+}
+
+.box .face.top,
+.box .face.bottom {
+  width: 60vmin;
+  height: 20vmin;
+  top: 10vmin;
+}
+
+.box .face.front  { transform: rotateY(  0deg) translateZ( 10vmin); }
+.box .face.back   { transform: rotateY(180deg) translateZ( 10vmin); }
+
+.box .face.right  { transform: rotateY( 90deg) translateZ(30vmin); }
+.box .face.left   { transform: rotateY(-90deg) translateZ(30vmin); }
+
+.box .face.top    { transform: rotateX( 90deg) translateZ(20vmin); }
+.box .face.bottom { transform: rotateX(-90deg) translateZ(20vmin); }
+
+
+/* ---------------------------------------------------------------- Carousel */
+.shape.carousel {
+  --width: 35vmin;
+  --height: 15vmin;
+}
+
+.carousel .face {
+  --width: 34vmin;
+  --height: 14vmin;
+  left: 0.5vmin;
+  top: 0.5vmin;
+}
+
+
+/* ----------------------------------------------------------------- Pyramid */
+.shape.pyramid {
+  --width: 50vmin;
+  --height: 50vmin;
+}
+
+.pyramid .triangle {
+  position: absolute;
+  overflow: hidden;
+  color: white;
+  border-left: 25vmin solid transparent;
+  border-right: 25vmin solid transparent;
+  border-bottom: 50vmin solid #ccc;
+  transform-origin: bottom;
+}
+
+.pyramid .triangle.front  { transform: rotateY(0)      translateZ(25vmin) rotateX(30deg); }
+.pyramid .triangle.right  { transform: rotateY(90deg)  translateZ(25vmin) rotateX(30deg); }
+.pyramid .triangle.back   { transform: rotateY(180deg) translateZ(25vmin) rotateX(30deg); }
+.pyramid .triangle.left   { transform: rotateY(270deg) translateZ(25vmin) rotateX(30deg); }
+.pyramid .face.bottom { transform: rotateX(-90deg) translateZ(25vmin); }
