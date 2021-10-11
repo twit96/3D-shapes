@@ -247,3 +247,21 @@ nav a.active { text-decoration: underline; }
 .pyramid .triangle.back   { transform: rotateY(180deg) translateZ(25vmin) rotateX(30deg); }
 .pyramid .triangle.left   { transform: rotateY(270deg) translateZ(25vmin) rotateX(30deg); }
 .pyramid .face.bottom { transform: rotateX(-90deg) translateZ(25vmin); }
+
+
+/* ----------------------------------------------------------------- Octahedron */
+.shape.octahedron {
+  --width: 40vmin;
+  --height: 80vmin;
+}
+
+.octahedron .pyramid {
+  position: absolute;
+  animation: 0;
+}
+.octahedron .pyramid:first-of-type {
+  transform:  translateY(-10vmin);
+}
+.octahedron .pyramid:last-of-type {
+  transform: translateY(40vmin) rotateX(180deg);
+}
